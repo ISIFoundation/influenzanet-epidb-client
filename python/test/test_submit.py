@@ -6,5 +6,5 @@ sys.path += ['../']
 from epidb.client import EpiDBClient
 
 client = EpiDBClient()
-client.submit('{ "data": "client" }', 'epidb-client')
+client.submit('{ "data": "client" }')
 
