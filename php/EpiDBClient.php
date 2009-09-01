@@ -3,7 +3,7 @@
 class EpiDBClient {
 
 	var $version = '0.0~20090901.1';
-	var $__user_agent = 'EpiDBClient v0.0~20090901.1';
+	var $__user_agent = 'EpiDBClient v0.0~20090901.1/php';
 
 	var $server = 'https://egg.science.uva.nl:7443';
 	var $path_submit = '/submit/';
