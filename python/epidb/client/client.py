@@ -2,10 +2,15 @@
 import urllib
 
 __version__ = '0.0~20090901.1'
+__user_agent__ = 'EpiDBClient v%s/python' % __version__
+
+class EpiDBClientOpener(urllib.FancyURLopener):
+	version = __user_agent__
 
 class EpiDBClient:
 
 	version = __version__
+	user_agent = __user_agent__
 
 	server = 'https://egg.science.uva.nl:7443'
 	path_submit = '/submit/'
@@ -15,7 +20,8 @@ class EpiDBClient:
 
 	def __epidb_call(self, url, param):
 		data = urllib.urlencode(param)
-		sock = urllib.urlopen(url, data)
+		opener = EpiDBClientOpener()
+		sock = opener.open(url, data)
 		res = sock.read()
 		sock.close()
 
