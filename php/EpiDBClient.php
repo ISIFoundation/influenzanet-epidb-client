@@ -3,6 +3,7 @@
 class EpiDBClient {
 
 	var $version = '0.0~20090901.1';
+	var $__user_agent = 'EpiDBClient v0.0~20090901.1';
 
 	var $server = 'https://egg.science.uva.nl:7443';
 	var $path_submit = '/submit/';
@@ -34,6 +35,7 @@ class EpiDBClient {
 		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($ch, CURLOPT_USERAGENT, $this->__user_agent);
 		$res = curl_exec($ch);
 		curl_close($ch);
 
