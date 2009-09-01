@@ -8,6 +8,10 @@ class EpiDBClient {
 	function __construct() {
 	}
 
+	function EpiDBClient() {
+		$this->__construct();
+	}
+
 	function __epidb_encode($data) {
 		$res = array();
 		foreach ($data as $key=>$val) {
