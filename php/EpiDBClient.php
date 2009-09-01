@@ -4,12 +4,14 @@ class EpiDBClient {
 
 	var $server = 'https://egg.science.uva.nl:7443';
 	var $path_submit = '/submit/';
+	var $api_key = '';
 
-	function __construct() {
+	function __construct($api_key='') {
+		$this->api_key = $api_key;
 	}
 
-	function EpiDBClient() {
-		$this->__construct();
+	function EpiDBClient($api_key='') {
+		$this->__construct($api_key);
 	}
 
 	function __epidb_encode($data) {
