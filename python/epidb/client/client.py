@@ -17,11 +17,11 @@ class EpiDBClient:
 
 		return res
 	
-	def submit(self, data, source, format='json'):
+	def submit(self, data):
 		param = {
 			'data': data,
-			'source': source,
-			'format': format
+			'source': '',
+			'format': ''
 		}
 
 		url = self.server + self.path_submit

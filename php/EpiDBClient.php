@@ -38,11 +38,11 @@ class EpiDBClient {
 		return $res;
 	}
 
-	function submit($data, $source, $format='json') {
+	function submit($data) {
 		$param = array();
 		$param['data'] = $data;
-		$param['source'] = $source;
-		$param['format'] = $format;
+		$param['source'] = '';
+		$param['format'] = '';
 		$url = $this->server . $this->path_submit;
 		$res = $this->__epidb_call($url, $param);
 	}
