@@ -1,7 +1,11 @@
 
 import urllib
 
+__version__ = '0.0~20090901.1'
+
 class EpiDBClient:
+
+	version = __version__
 
 	server = 'https://egg.science.uva.nl:7443'
 	path_submit = '/submit/'
