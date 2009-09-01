@@ -2,13 +2,13 @@
 
 class EpiDBClient {
 
-	private $server = 'https://egg.science.uva.nl:7443';
-	private $path_submit = '/submit/';
+	var $server = 'https://egg.science.uva.nl:7443';
+	var $path_submit = '/submit/';
 
-	public function __construct() {
+	function __construct() {
 	}
 
-	private function __epidb_encode($data) {
+	function __epidb_encode($data) {
 		$res = array();
 		foreach ($data as $key=>$val) {
 			$res[] = $key . '=' . urlencode($val);
@@ -16,7 +16,7 @@ class EpiDBClient {
 		return implode('&', $res);
 	}
 
-	private function __epidb_call($url, $data) {
+	function __epidb_call($url, $data) {
 		$param = $this->__epidb_encode($data);
 
 		$ch = curl_init();
@@ -32,7 +32,7 @@ class EpiDBClient {
 		return $res;
 	}
 
-	public function submit($data, $source, $format='json') {
+	function submit($data, $source, $format='json') {
 		$param = array();
 		$param['data'] = $data;
 		$param['source'] = $source;
