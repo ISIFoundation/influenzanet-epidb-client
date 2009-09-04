@@ -8,5 +8,7 @@ from epidb.client import EpiDBClient
 data = 'data'
 
 client = EpiDBClient()
-client.submit(data)
+res = client.survey_submit(data)
+
+print res
 
