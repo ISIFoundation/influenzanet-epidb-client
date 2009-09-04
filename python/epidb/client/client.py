@@ -15,7 +15,7 @@ class EpiDBClient:
 	server = 'https://egg.science.uva.nl:7443'
 	path_survey = '/survey/'
 
-	def __init__(self, api_key=''):
+	def __init__(self, api_key=None):
 		self.api_key = api_key
 
 	def __epidb_call(self, url, param):
