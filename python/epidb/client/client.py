@@ -29,9 +29,7 @@ class EpiDBClient:
 	
 	def submit(self, data):
 		param = {
-			'data': data,
-			'source': '',
-			'format': ''
+			'data': data
 		}
 
 		url = self.server + self.path_submit

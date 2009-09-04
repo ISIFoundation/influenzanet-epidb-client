@@ -45,8 +45,6 @@ class EpiDBClient {
 	function submit($data) {
 		$param = array();
 		$param['data'] = $data;
-		$param['source'] = '';
-		$param['format'] = '';
 		$url = $this->server . $this->path_submit;
 		$res = $this->__epidb_call($url, $param);
 		return $res;
