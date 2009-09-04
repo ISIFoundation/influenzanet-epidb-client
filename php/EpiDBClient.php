@@ -9,7 +9,7 @@ class EpiDBClient {
 	var $path_survey = '/survey/';
 	var $api_key = '';
 
-	function __construct($api_key='') {
+	function __construct($api_key=null) {
 		$this->api_key = $api_key;
 	}
 
