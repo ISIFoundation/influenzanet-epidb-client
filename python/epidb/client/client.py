@@ -13,7 +13,7 @@ class EpiDBClient:
 	user_agent = __user_agent__
 
 	server = 'https://egg.science.uva.nl:7443'
-	path_submit = '/submit/'
+	path_survey = '/survey/'
 
 	def __init__(self, api_key=''):
 		self.api_key = api_key
@@ -27,12 +27,12 @@ class EpiDBClient:
 
 		return res
 	
-	def submit(self, data):
+	def survey_submit(self, data):
 		param = {
 			'data': data
 		}
 
-		url = self.server + self.path_submit
+		url = self.server + self.path_survey
 		res = self.__epidb_call(url, param)
 
 		return res

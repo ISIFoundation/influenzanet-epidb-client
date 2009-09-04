@@ -6,7 +6,7 @@ class EpiDBClient {
 	var $__user_agent = 'EpiDBClient v0.0~20090901.1/php';
 
 	var $server = 'https://egg.science.uva.nl:7443';
-	var $path_submit = '/submit/';
+	var $path_survey = '/survey/';
 	var $api_key = '';
 
 	function __construct($api_key='') {
@@ -42,10 +42,10 @@ class EpiDBClient {
 		return $res;
 	}
 
-	function submit($data) {
+	function survey_submit($data) {
 		$param = array();
 		$param['data'] = $data;
-		$url = $this->server . $this->path_submit;
+		$url = $this->server . $this->path_survey;
 		$res = $this->__epidb_call($url, $param);
 		return $res;
 	}
