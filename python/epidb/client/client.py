@@ -37,3 +37,5 @@ class EpiDBClient:
 		url = self.server + self.path_submit
 		res = self.__epidb_call(url, param)
 
+		return res
+
