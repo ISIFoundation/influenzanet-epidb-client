@@ -1,11 +1,9 @@
 
 import urllib
+import urllib2
 
 __version__ = '0.0~20090901.1'
 __user_agent__ = 'EpiDBClient v%s/python' % __version__
-
-class EpiDBClientOpener(urllib.FancyURLopener):
-	version = __user_agent__
 
 class EpiDBClient:
 
@@ -20,8 +18,12 @@ class EpiDBClient:
 
 	def __epidb_call(self, url, param):
 		data = urllib.urlencode(param)
-		opener = EpiDBClientOpener()
-		sock = opener.open(url, data)
+
+		req = urllib2.Request(url)
+		req.add_header('User-Agent', self.user_agent)
+		if self.api_key:
+			req.add_header('Cookie', 'epidb-apikey=%s' % self.api_key)
+		sock = urllib2.urlopen(req, data)
 		res = sock.read()
 		sock.close()
 
