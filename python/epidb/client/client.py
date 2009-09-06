@@ -2,8 +2,8 @@
 import urllib
 import urllib2
 
-__version__ = '0.0~20090901.1'
-__user_agent__ = 'EpiDBClient v%s/python' % __version__
+__version__ = '0.0~20090906.1'
+__user_agent__ = 'EpiDB-Client/%s (python)' % __version__
 
 class EpiDBClient:
 

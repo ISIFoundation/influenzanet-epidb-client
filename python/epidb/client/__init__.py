@@ -1,3 +1,3 @@
 
-from epidb.client.client import EpiDBClient
+from epidb.client.client import EpiDBClient, __version__
 
