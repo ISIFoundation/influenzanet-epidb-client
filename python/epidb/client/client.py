@@ -17,15 +17,21 @@ class EpiDBClient:
 		self.api_key = api_key
 
 	def __epidb_call(self, url, param):
-		data = urllib.urlencode(param)
+		res = None
+		sock = None
 
-		req = urllib2.Request(url)
-		req.add_header('User-Agent', self.user_agent)
-		if self.api_key:
-			req.add_header('Cookie', 'epidb-apikey=%s' % self.api_key)
-		sock = urllib2.urlopen(req, data)
-		res = sock.read()
-		sock.close()
+		try:
+			data = urllib.urlencode(param)
+
+			req = urllib2.Request(url)
+			req.add_header('User-Agent', self.user_agent)
+			if self.api_key:
+				req.add_header('Cookie', 'epidb-apikey=%s' % self.api_key)
+			sock = urllib2.urlopen(req, data)
+			res = sock.read()
+			sock.close()
+		except urllib2.HTTPError, e:
+			res = e.read()
 
 		return res
 	
