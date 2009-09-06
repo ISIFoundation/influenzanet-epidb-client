@@ -15,3 +15,5 @@ res = client.survey_submit(data)
 
 print res
 
+# vim: ts=4 sts=4 expandtab
+

@@ -12,3 +12,5 @@ $res = $client->survey_submit($data);
 
 print "$res\n";
 
+// vim: ts=4 sts=4 expandtab
+
