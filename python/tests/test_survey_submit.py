@@ -4,11 +4,13 @@ import sys
 sys.path += ['../']
 
 from epidb.client import EpiDBClient
+import config
 
-key = '0123456789abcdef0123456789abcdef01234567'
+key = config.key
 data = 'data'
 
 client = EpiDBClient(key)
+client.server = config.server
 res = client.survey_submit(data)
 
 print res

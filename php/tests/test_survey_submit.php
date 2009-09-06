@@ -1,11 +1,13 @@
 <?
 
 require_once('../EpiDBClient.php');
+require_once('config.php');
 
-$key = '0123456789abcdef0123456789abcdef01234567';
+$key = $_key;
 $data = 'data';
 
 $client = new EpiDBClient($key);
+$client->server = $_server;
 $res = $client->survey_submit($data);
 
 print "$res\n";
