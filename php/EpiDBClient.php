@@ -7,6 +7,7 @@ class EpiDBClient {
 
     var $server = 'https://egg.science.uva.nl:7443';
     var $path_survey = '/survey/';
+    var $path_intake = '/intake/';
     var $api_key = '';
 
     function __construct($api_key=null) {
@@ -51,7 +52,13 @@ class EpiDBClient {
         return $res;
     }
 
-
+    function intake_submit($user_id, $data) {
+        $param = array();
+        $param['data'] = $data;
+        $url = $this->server . $this->path_intake . $user_id . '/';
+        $res = $this->__epidb_call($url, $param);
+        return $res;
+    }
 
 };
 

@@ -12,6 +12,7 @@ class EpiDBClient:
 
     server = 'https://egg.science.uva.nl:7443'
     path_survey = '/survey/'
+    path_intake = '/intake/'
 
     def __init__(self, api_key=None):
         self.api_key = api_key
@@ -45,6 +46,15 @@ class EpiDBClient:
 
         return res
 
+    def intake_submit(self, user_id, data):
+        param = {
+            'data': data
+        }
+
+        url = self.server + self.path_intake + user_id + '/'
+        res = self.__epidb_call(url, param)
+
+        return res
 
 # vim: ts=4 sts=4 expandtab
 
