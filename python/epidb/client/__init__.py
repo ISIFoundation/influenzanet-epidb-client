@@ -59,5 +59,11 @@ class EpiDBClient:
 
         return res
 
+    def intake_get(self, user_id):
+        url = self.server + self.path_intake + user_id + '/'
+        res = self.__epidb_call(url)
+
+        return res
+
 # vim: ts=4 sts=4 expandtab
 

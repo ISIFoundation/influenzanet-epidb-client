@@ -65,6 +65,12 @@ class EpiDBClient {
         return $res;
     }
 
+    function intake_get($user_id) {
+        $url = $this->server . $this->path_intake . $user_id . '/';
+        $res = $this->__epidb_call($url);
+        return $res;
+    }
+
 };
 
 // vim: ts=4 sts=4 expandtab
