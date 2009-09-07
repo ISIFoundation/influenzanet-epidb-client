@@ -2,8 +2,8 @@
 
 class EpiDBClient {
 
-    var $version = '0.0~20090906.1';
-    var $__user_agent = 'EpiDB-Client/0.0~20090906.1 (php)';
+    var $version = '0.0~20090907.1';
+    var $__user_agent = 'EpiDB-Client/0.0~20090907.1 (php)';
 
     var $server = 'https://egg.science.uva.nl:7443';
     var $path_survey = '/survey/';
