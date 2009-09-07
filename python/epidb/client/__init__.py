@@ -17,12 +17,15 @@ class EpiDBClient:
     def __init__(self, api_key=None):
         self.api_key = api_key
 
-    def __epidb_call(self, url, param):
+    def __epidb_call(self, url, param=None):
         res = None
         sock = None
 
         try:
-            data = urllib.urlencode(param)
+            if param is not None:
+                data = urllib.urlencode(param)
+            else:
+                data = None
 
             req = urllib2.Request(url)
             req.add_header('User-Agent', self.user_agent)

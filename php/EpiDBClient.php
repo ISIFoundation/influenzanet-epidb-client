@@ -26,13 +26,18 @@ class EpiDBClient {
         return implode('&', $res);
     }
 
-    function __epidb_call($url, $data) {
-        $param = $this->__epidb_encode($data);
+    function __epidb_call($url, $data=null) {
+        $param = '';
+        if ($data !== null) {
+            $param = $this->__epidb_encode($data);
+        }
 
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_POST, count($data));
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $param);
+        if ($data !== null) {
+            curl_setopt($ch, CURLOPT_POST, count($data));
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $param);
+        }
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
