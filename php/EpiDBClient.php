@@ -14,7 +14,7 @@ class EpiDBClient {
         $this->api_key = $api_key;
     }
 
-    function EpiDBClient($api_key='') {
+    function EpiDBClient($api_key=null) {
         $this->__construct($api_key);
     }
 
