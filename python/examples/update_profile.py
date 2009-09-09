@@ -11,32 +11,24 @@ except ImportError:
 from epidb.client import EpiDBClient
 
 api_key = 'your-epidb-api-key-here'
+user_id = '1c66bb91-33fd-4c6c-9c11-8ddd94164ae8'
 data = {
-    'user_id': '1c66bb91-33fd-4c6c-9c11-8ddd94164ae8',
-    'date': '2009-09-09 09:09:09',
-    'answers': {
-        'q1': 1,
-        'q2': True,
-        'q3': [ 1, 2, 3 ],
-        'q4': 'Jakarta'
-    }
+    'birth-place': 'Jakarta',
+    'birth-day': '2009-09-09',
+    'has-pets': False
 }
 
 param = json.dumps(data)
 
 client = EpiDBClient(api_key)
-res = client.survey_submit(param)
+res = client.update_profile(user_id, param)
 
 result = json.loads(res)
 status = result['stat']
 
 print "status:", status
 
-if status == 'ok':
-    print "id:", result['id']
-else:
+if status != 'ok':
     print "error code:", result['code']
     print "       msg:", result['msg']
-
-
 

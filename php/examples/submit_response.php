@@ -20,7 +20,7 @@ $data = array(
 $param = json_encode($data);
 
 $client = new EpiDBClient($api_key);
-$res = $client->survey_submit($param);
+$res = $client->submit_response($param);
 
 $result = json_decode($res);
 $status = $result->stat;
