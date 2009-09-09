@@ -11,7 +11,7 @@ data = 'data'
 
 client = EpiDBClient(key)
 client.server = config.server
-res = client.submit_response(data)
+res = client.response_submit(data)
 
 print res
 

@@ -21,7 +21,7 @@ data = {
 param = json.dumps(data)
 
 client = EpiDBClient(api_key)
-res = client.update_profile(user_id, param)
+res = client.profile_update(user_id, param)
 
 result = json.loads(res)
 status = result['stat']

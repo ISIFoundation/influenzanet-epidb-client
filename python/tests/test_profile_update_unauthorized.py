@@ -11,7 +11,7 @@ data = 'data'
 
 client = EpiDBClient()
 client.server = config.server
-res = client.update_profile(config.user_id, data)
+res = client.profile_update(config.user_id, data)
 
 print res
 

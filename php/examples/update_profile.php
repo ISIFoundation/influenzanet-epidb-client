@@ -16,7 +16,7 @@ $data = array(
 $param = json_encode($data);
 
 $client = new EpiDBClient($api_key);
-$res = $client->update_profile($user_id, $param);
+$res = $client->profile_update($user_id, $param);
 
 $result = json_decode($res, true);
 $status = $result['stat'];

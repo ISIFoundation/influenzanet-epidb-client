@@ -10,7 +10,7 @@ key = config.key
 
 client = EpiDBClient(key)
 client.server = config.server
-res = client.get_profile(config.user_id)
+res = client.profile_get(config.user_id)
 
 print res
 

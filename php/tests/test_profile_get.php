@@ -7,7 +7,7 @@ $key = $_key;
 
 $client = new EpiDBClient($key);
 $client->server = $_server;
-$res = $client->get_profile($_user_id, '');
+$res = $client->profile_get($_user_id, '');
 
 print "$res\n";
 

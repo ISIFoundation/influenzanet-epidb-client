@@ -49,7 +49,7 @@ class EpiDBClient {
         return $res;
     }
 
-    function submit_response($data) {
+    function response_submit($data) {
         $param = array();
         $param['data'] = $data;
         $url = $this->server . $this->path_response;
@@ -57,7 +57,7 @@ class EpiDBClient {
         return $res;
     }
 
-    function update_profile($user_id, $data) {
+    function profile_update($user_id, $data) {
         $param = array();
         $param['data'] = $data;
         $url = $this->server . $this->path_profile . $user_id . '/';
@@ -65,7 +65,7 @@ class EpiDBClient {
         return $res;
     }
 
-    function get_profile($user_id) {
+    function profile_get($user_id) {
         $url = $this->server . $this->path_profile . $user_id . '/';
         $res = $this->__epidb_call($url);
         return $res;

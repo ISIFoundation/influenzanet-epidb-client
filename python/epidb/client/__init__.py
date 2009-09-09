@@ -39,7 +39,7 @@ class EpiDBClient:
 
         return res
     
-    def submit_response(self, data):
+    def response_submit(self, data):
         param = {
             'data': data
         }
@@ -49,7 +49,7 @@ class EpiDBClient:
 
         return res
 
-    def update_profile(self, user_id, data):
+    def profile_update(self, user_id, data):
         param = {
             'data': data
         }

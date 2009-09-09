@@ -8,7 +8,7 @@ $data = 'data';
 
 $client = new EpiDBClient($key);
 $client->server = $_server;
-$res = $client->submit_response($data);
+$res = $client->response_submit($data);
 
 print "$res\n";
 

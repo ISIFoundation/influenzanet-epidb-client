@@ -8,7 +8,7 @@ $data = 'data';
 
 $client = new EpiDBClient();
 $client->server = $_server;
-$res = $client->update_profile($_user_id, $data);
+$res = $client->profile_update($_user_id, $data);
 
 print "$res\n";
 
