@@ -6,8 +6,8 @@ class EpiDBClient {
     var $__user_agent = 'EpiDB-Client/0.0~20090907.1 (php)';
 
     var $server = 'https://egg.science.uva.nl:7443';
-    var $path_survey = '/survey/';
-    var $path_intake = '/intake/';
+    var $path_response = '/response/';
+    var $path_profile = '/profile/';
     var $api_key = '';
 
     function __construct($api_key=null) {
@@ -49,24 +49,24 @@ class EpiDBClient {
         return $res;
     }
 
-    function survey_submit($data) {
+    function submit_response($data) {
         $param = array();
         $param['data'] = $data;
-        $url = $this->server . $this->path_survey;
+        $url = $this->server . $this->path_response;
         $res = $this->__epidb_call($url, $param);
         return $res;
     }
 
-    function intake_submit($user_id, $data) {
+    function update_profile($user_id, $data) {
         $param = array();
         $param['data'] = $data;
-        $url = $this->server . $this->path_intake . $user_id . '/';
+        $url = $this->server . $this->path_profile . $user_id . '/';
         $res = $this->__epidb_call($url, $param);
         return $res;
     }
 
-    function intake_get($user_id) {
-        $url = $this->server . $this->path_intake . $user_id . '/';
+    function get_profile($user_id) {
+        $url = $this->server . $this->path_profile . $user_id . '/';
         $res = $this->__epidb_call($url);
         return $res;
     }
