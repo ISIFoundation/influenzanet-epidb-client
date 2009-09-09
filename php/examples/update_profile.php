@@ -18,15 +18,15 @@ $param = json_encode($data);
 $client = new EpiDBClient($api_key);
 $res = $client->update_profile($user_id, $param);
 
-$result = json_decode($res);
-$status = $result->stat;
+$result = json_decode($res, true);
+$status = $result['stat'];
 
 header('Content-Type: text/plain');
 
 print("status: " . $status . "\n");
 
 if ($status != 'ok') {
-    print("error code: " . $result->code . "\n");
-    print("       msg: " . $result->msg . "\n");
+    print("error code: " . $result['code'] . "\n");
+    print("       msg: " . $result['msg'] . "\n");
 }
 

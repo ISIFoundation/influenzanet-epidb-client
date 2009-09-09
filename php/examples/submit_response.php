@@ -22,18 +22,18 @@ $param = json_encode($data);
 $client = new EpiDBClient($api_key);
 $res = $client->submit_response($param);
 
-$result = json_decode($res);
-$status = $result->stat;
+$result = json_decode($res, true);
+$status = $result['stat'];
 
 header('Content-Type: text/plain');
 
 print("status: " . $status . "\n");
 
 if ($status == 'ok') {
-    print("id: " . $result->id . "\n");
+    print("id: " . $result['id'] . "\n");
 }
 else {
-    print("error code: " . $result->code . "\n");
-    print("       msg: " . $result->msg . "\n");
+    print("error code: " . $result['code'] . "\n");
+    print("       msg: " . $result['msg'] . "\n");
 }
 
