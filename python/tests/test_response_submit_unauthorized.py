@@ -6,11 +6,12 @@ sys.path += ['../']
 from epidb.client import EpiDBClient
 import config
 
-key = config.key
+key = None
+data = 'data'
 
 client = EpiDBClient(key)
 client.server = config.server
-res = client.intake_get(config.user_id)
+res = client.submit_response(data)
 
 print res
 

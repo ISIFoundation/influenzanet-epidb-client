@@ -3,12 +3,12 @@
 require_once('../EpiDBClient.php');
 require_once('config.php');
 
-$key = $_key;
+$key = null;
 $data = 'data';
 
 $client = new EpiDBClient($key);
 $client->server = $_server;
-$res = $client->intake_submit($_user_id, $data);
+$res = $client->submit_response($data);
 
 print "$res\n";
 

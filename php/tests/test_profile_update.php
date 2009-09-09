@@ -6,9 +6,9 @@ require_once('config.php');
 $key = $_key;
 $data = 'data';
 
-$client = new EpiDBClient();
+$client = new EpiDBClient($key);
 $client->server = $_server;
-$res = $client->intake_submit($_user_id, $data);
+$res = $client->update_profile($_user_id, $data);
 
 print "$res\n";
 

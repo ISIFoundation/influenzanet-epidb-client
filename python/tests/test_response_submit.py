@@ -9,9 +9,9 @@ import config
 key = config.key
 data = 'data'
 
-client = EpiDBClient()
+client = EpiDBClient(key)
 client.server = config.server
-res = client.intake_submit(config.user_id, data)
+res = client.submit_response(data)
 
 print res
 

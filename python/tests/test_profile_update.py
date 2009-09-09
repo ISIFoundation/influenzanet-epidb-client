@@ -11,7 +11,7 @@ data = 'data'
 
 client = EpiDBClient(key)
 client.server = config.server
-res = client.survey_submit(data)
+res = client.update_profile(config.user_id, data)
 
 print res
 
