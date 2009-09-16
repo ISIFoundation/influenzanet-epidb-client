@@ -7,7 +7,7 @@ try:
 except ImportError:
     import simplejson as json
 
-__version__ = '0.0~20090907.1'
+__version__ = '0.0~20090916.1'
 __user_agent__ = 'EpiDB-Client/%s (python)' % __version__
 
 class EpiDBClient:
