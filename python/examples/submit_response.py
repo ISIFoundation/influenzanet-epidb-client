@@ -3,11 +3,6 @@
 import sys
 sys.path += ['..']
 
-try:
-    import json
-except ImportError:
-    import simplejson as json
-
 from epidb.client import EpiDBClient
 
 api_key = 'your-epidb-api-key-here'
@@ -22,10 +17,8 @@ data = {
     }
 }
 
-param = json.dumps(data)
-
 client = EpiDBClient(api_key)
-result = client.response_submit(param)
+result = client.response_submit(data)
 
 status = result['stat']
 

@@ -44,12 +44,15 @@ class EpiDBClient:
 
         return res
 
+    def __wrap(self, data):
+        return json.dumps(data)
+
     def __unwrap(self, res):
         return json.loads(res)
     
     def response_submit(self, data):
         param = {
-            'data': data
+            'data': self.__wrap(data)
         }
 
         url = self.server + self.path_response
@@ -59,7 +62,7 @@ class EpiDBClient:
 
     def profile_update(self, user_id, data):
         param = {
-            'data': data
+            'data': self.__wrap(data)
         }
 
         url = self.server + self.path_profile + user_id + '/'

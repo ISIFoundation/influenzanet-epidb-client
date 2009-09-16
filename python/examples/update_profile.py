@@ -3,11 +3,6 @@
 import sys
 sys.path += ['..']
 
-try:
-    import json
-except ImportError:
-    import simplejson as json
-
 from epidb.client import EpiDBClient
 
 api_key = 'your-epidb-api-key-here'
@@ -18,10 +13,8 @@ data = {
     'has-pets': False
 }
 
-param = json.dumps(data)
-
 client = EpiDBClient(api_key)
-result = client.profile_update(user_id, param)
+result = client.profile_update(user_id, data)
 
 status = result['stat']
 

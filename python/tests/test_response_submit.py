@@ -7,7 +7,10 @@ from epidb.client import EpiDBClient
 import config
 
 key = config.key
-data = 'data'
+data = {
+    'user_id': config.user_id,
+    'date': '2009-09-09 09:09:09'
+}
 
 client = EpiDBClient(key)
 client.server = config.server
