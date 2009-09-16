@@ -2,6 +2,11 @@
 import urllib
 import urllib2
 
+try:
+    import json
+except ImportError:
+    import simplejson as json
+
 __version__ = '0.0~20090907.1'
 __user_agent__ = 'EpiDB-Client/%s (python)' % __version__
 
@@ -38,6 +43,9 @@ class EpiDBClient:
             res = e.read()
 
         return res
+
+    def __unwrap(self, res):
+        return json.loads(res)
     
     def response_submit(self, data):
         param = {
@@ -47,7 +55,7 @@ class EpiDBClient:
         url = self.server + self.path_response
         res = self.__epidb_call(url, param)
 
-        return res
+        return self.__unwrap(res)
 
     def profile_update(self, user_id, data):
         param = {
@@ -57,13 +65,13 @@ class EpiDBClient:
         url = self.server + self.path_profile + user_id + '/'
         res = self.__epidb_call(url, param)
 
-        return res
+        return self.__unwrap(res)
 
     def intake_get(self, user_id):
         url = self.server + self.path_intake + user_id + '/'
         res = self.__epidb_call(url)
 
-        return res
+        return self.__unwrap(res)
 
 # vim: ts=4 sts=4 expandtab
 
