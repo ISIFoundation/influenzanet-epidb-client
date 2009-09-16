@@ -25,9 +25,8 @@ data = {
 param = json.dumps(data)
 
 client = EpiDBClient(api_key)
-res = client.response_submit(param)
+result = client.response_submit(param)
 
-result = json.loads(res)
 status = result['stat']
 
 print "status:", status
