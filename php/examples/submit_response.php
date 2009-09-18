@@ -17,12 +17,9 @@ $data = array(
     )
 );
 
-$param = json_encode($data);
-
 $client = new EpiDBClient($api_key);
-$res = $client->response_submit($param);
+$result = $client->response_submit($data);
 
-$result = json_decode($res, true);
 $status = $result['stat'];
 
 header('Content-Type: text/plain');

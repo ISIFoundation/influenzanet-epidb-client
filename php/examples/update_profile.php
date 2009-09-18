@@ -13,12 +13,9 @@ $data = array(
     'has-pets' => False
 );
 
-$param = json_encode($data);
-
 $client = new EpiDBClient($api_key);
-$res = $client->profile_update($user_id, $param);
+$result = $client->profile_update($user_id, $data);
 
-$result = json_decode($res, true);
 $status = $result['stat'];
 
 header('Content-Type: text/plain');
