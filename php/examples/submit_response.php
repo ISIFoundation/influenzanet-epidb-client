@@ -1,8 +1,5 @@
 <?
 
-// This example requires JSON library that is available
-// in PHP 5.2 or later or json PECL package.
-
 require_once('../EpiDBClient.php');
 
 $api_key = 'your-epidb-api-key-here';
