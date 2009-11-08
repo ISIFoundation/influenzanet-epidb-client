@@ -3,7 +3,7 @@
 import sys
 sys.path += ['../']
 
-from epidb.client import EpiDBClient
+from epidb_client import EpiDBClient
 import config
 
 key = None

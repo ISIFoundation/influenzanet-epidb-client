@@ -3,7 +3,7 @@
 import sys
 sys.path += ['..']
 
-from epidb.client import EpiDBClient
+from epidb_client import EpiDBClient
 
 api_key = 'your-epidb-api-key-here'
 user_id = '1c66bb91-33fd-4c6c-9c11-8ddd94164ae8'
