@@ -8,8 +8,8 @@ if (!function_exists('json_encode') || !function_exists('json_decode')) {
 
 class EpiDBClient {
 
-    var $version = '0.0~20090916.1';
-    var $__user_agent = 'EpiDB-Client/0.0~20090916.1 (php)';
+    var $version = '0.1.0';
+    var $__user_agent = 'EpiDB-Client/0.1.0 (php)';
 
     var $server = 'https://egg.science.uva.nl:7443';
     var $path_response = '/response/';
