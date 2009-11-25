@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import sys
-sys.path += ['..']
+sys.path += ['../src']
 
 from epidb_client import EpiDBClient
 
