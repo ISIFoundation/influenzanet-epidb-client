@@ -1,12 +1,16 @@
 #!/usr/bin/env python
 
+import os
 import sys
-sys.path += ['../src']
+sys.path.insert(0, os.path.join(os.path.dirname(
+    os.path.dirname(os.path.abspath(__file__))), 'src'))
 
 from epidb_client import EpiDBClient
 
-api_key = 'your-epidb-api-key-here'
-user_id = '1c66bb91-33fd-4c6c-9c11-8ddd94164ae8'
+import config
+
+api_key = config.api_key
+user_id = config.user_id
 data = {
     'birth-place': 'Jakarta',
     'birth-day': '2009-09-09',
