@@ -15,5 +15,6 @@ setup(
     package_dir = {'': 'src'},
     packages = ['epidb_client'],
     install_requires = ['setuptools'],
+    test_suite = 'epidb_client.tests',
 )
 
