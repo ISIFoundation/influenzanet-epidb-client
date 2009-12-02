@@ -102,10 +102,25 @@ class BasicClientTestCase(unittest.TestCase):
                           self.client._call, config.server)
 
     def testErrorResponse(self):
-        code = "123456"
+        code = 123456
         msg = "error message"
 
-        eresult = '{"stat": "fail", "code": "%s", "msg": "%s"}' % (code, msg)
+        eresult = '{"stat": "fail", "code": %d, "msg": "%s"}' % (code, msg)
+        dresult = json.loads(eresult)
+
+        self.urllib2._error = eresult
+        try:
+            self.client._call(config.server)
+            self.fail()
+        except epidb_client.ResponseError, e:
+            self.assertEqual(e.code, code)
+            self.assertEqual(e.msg, msg)
+
+    def testErrorResponseStringCode(self):
+        code = 123456
+        msg = "error message"
+
+        eresult = '{"stat": "fail", "code": "%d", "msg": "%s"}' % (code, msg)
         dresult = json.loads(eresult)
 
         self.urllib2._error = eresult
@@ -117,10 +132,10 @@ class BasicClientTestCase(unittest.TestCase):
             self.assertEqual(e.msg, msg)
 
     def testOtherError(self):
-        code = "123456"
+        code = 123456
         msg = "error message"
 
-        eresult = '{"stat": "fail", "code": "%s", "msg": "%s"}' % (code, msg)
+        eresult = '{"stat": "fail", "code": %d, "msg": "%s"}' % (code, msg)
         dresult = json.loads(eresult)
 
         self.urllib2._error = RuntimeError()
@@ -145,10 +160,10 @@ class BasicClientTestCase(unittest.TestCase):
 
     def testInvalidStatus(self):
         # What if a 200 OK response returns an error message?
-        code = "123456"
+        code = 123456
         msg = "error message"
 
-        eresult = '{"stat": "fail", "code": "%s", "msg": "%s"}' % (code, msg)
+        eresult = '{"stat": "fail", "code": %d, "msg": "%s"}' % (code, msg)
         dresult = json.loads(eresult)
 
         self.urllib2._result = eresult
@@ -179,7 +194,7 @@ class BasicClientTestCase(unittest.TestCase):
                           config.server)
 
     def testInvalidMessageNoMsg(self):
-        eresult = '{"stat": "fail", "code": "123"}'
+        eresult = '{"stat": "fail", "code": 123}'
 
         self.urllib2._error = eresult
         self.assertRaises(epidb_client.InvalidResponseError, self.client._call,
