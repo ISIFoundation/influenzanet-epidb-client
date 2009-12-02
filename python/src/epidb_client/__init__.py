@@ -59,7 +59,7 @@ class BasicClient:
                         data.get('code', None) is None or \
                         data.get('msg', None) is None:
                     raise InvalidResponseError()
-                raise ResponseError(data['code'], data['msg'])
+                raise ResponseError(int(data['code']), data['msg'])
             if data.get('stat', None) != 'ok':
                 raise InvalidResponseError()
             return data
