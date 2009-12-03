@@ -11,7 +11,7 @@ setup(
     author = 'Fajran Iman Rusadi',
     package_dir = {'': 'src'},
     packages = ['epidb_client'],
-    requires = ['simplejson'],
+    install_requires = ['simplejson'],
     test_suite = 'epidb_client.tests',
 )
 
