@@ -78,14 +78,12 @@ class BasicClient:
 
     def _auth_call(self, url, api_key, method='GET', param={}, headers={}, 
                    cookies={}):
-        cookies['epidb-apikey'] = api_key
         headers['Authorization'] = 'Basic %s' % self._encode_auth(api_key)
         return self._call(url, method, param, headers, cookies)
 
     def _admin_call(self, url, session_id, method='GET', param={}, headers={},
                     cookies={}):
         cookies['session_id'] = session_id
-        headers['Authorization'] = 'Basic %s' % self._encode_auth(session_key)
         return self._call(url, method, param, headers, cookies)
 
 class EpiDBClient(BasicClient):
