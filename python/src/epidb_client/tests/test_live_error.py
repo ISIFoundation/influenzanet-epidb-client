@@ -4,8 +4,7 @@ import random
 import socket
 
 import epidb_client
-from epidb_client import EpiDBClient
-import config
+from epidb_client import BasicClient, config
 
 class LiveErrorsTestCase(unittest.TestCase):
     def setUp(self):

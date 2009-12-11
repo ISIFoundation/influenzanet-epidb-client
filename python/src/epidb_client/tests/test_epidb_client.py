@@ -7,9 +7,8 @@ except ImportError:
     import json
 
 import epidb_client
-from epidb_client import EpiDBClient
+from epidb_client import BasicClient, config
 
-import config
 from mocks import *
 
 class EpiDbClientTestCase(unittest.TestCase):
