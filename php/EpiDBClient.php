@@ -48,7 +48,9 @@ class EpiDBClient {
         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_USERAGENT, $this->__user_agent);
-        curl_setopt($ch, CURLOPT_COOKIE, "epidb-apikey=" . $this->api_key);
+        if ($this->api_key != null) {
+            curl_setopt($ch, CURLOPT_COOKIE, "epidb-apikey=" . $this->api_key);
+        }
         $res = curl_exec($ch);
         curl_close($ch);
 
