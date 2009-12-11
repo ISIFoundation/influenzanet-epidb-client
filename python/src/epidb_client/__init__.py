@@ -22,7 +22,7 @@ class BasicClient:
     version = __version__
     user_agent = __user_agent__
 
-    def _send(self, url, method='GET', param={}, cookies={}):
+    def _send(self, url, method='GET', param={}, headers={}, cookies={}):
         data = None
         if param:
             data = urllib.urlencode(param)
@@ -31,10 +31,14 @@ class BasicClient:
             data = ''
 
         req = urllib2.Request(url)
-        req.add_header('User-Agent', self.user_agent)
-        
+
+        for header in headers:
+            req.add_header(header, headers[header])
+
         if cookies:
             req.add_header('Cookie', urllib.urlencode(cookies))
+
+        req.add_header('User-Agent', self.user_agent)
 
         sock = urllib2.urlopen(req, data)
         res = sock.read()
@@ -42,12 +46,12 @@ class BasicClient:
 
         return res
 
-    def _call(self, url, method='GET', param={}, cookies={}):
+    def _call(self, url, method='GET', param={}, headers={}, cookies={}):
         res = None
         err = None
 
         try:
-            res = self._send(url, method, param, cookies)
+            res = self._send(url, method, param, headers, cookies)
         except urllib2.HTTPError, e:
             err = e
             res = e.read()
