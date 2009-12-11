@@ -9,7 +9,7 @@ setup(
     url = 'http://www.epiwork.eu/',
     description = 'EPIWork Database - Client Code',
     author = 'Fajran Iman Rusadi',
-    package_dir = {'': 'src'},
+    package_dir = {'': 'python/src'},
     packages = ['epidb_client'],
     install_requires = ['simplejson'],
     test_suite = 'epidb_client.tests',
