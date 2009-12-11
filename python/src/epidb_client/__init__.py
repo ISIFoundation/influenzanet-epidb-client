@@ -1,5 +1,6 @@
 import urllib
 import urllib2
+import base64
 
 try:
     import simplejson as json
@@ -72,13 +73,20 @@ class BasicClient:
                 raise err
             raise InvalidResponseError()
 
-    def _auth_call(self, url, api_key, method='GET', param={}, cookies={}):
-        cookies['epidb-apikey'] = api_key
-        return self._call(url, method, param, cookies)
+    def _encode_auth(self, key):
+        return base64.encodestring('%s:%s' % (key, key))[:-1]
 
-    def _admin_call(self, url, session_id, method='GET', param={}, cookies={}):
+    def _auth_call(self, url, api_key, method='GET', param={}, headers={}, 
+                   cookies={}):
+        cookies['epidb-apikey'] = api_key
+        headers['Authorization'] = 'Basic %s' % self._encode_auth(api_key)
+        return self._call(url, method, param, headers, cookies)
+
+    def _admin_call(self, url, session_id, method='GET', param={}, headers={},
+                    cookies={}):
         cookies['session_id'] = session_id
-        return self._call(url, method, param, cookies)
+        headers['Authorization'] = 'Basic %s' % self._encode_auth(session_key)
+        return self._call(url, method, param, headers, cookies)
 
 class EpiDBClient(BasicClient):
 
