@@ -28,6 +28,10 @@ class EpiDBClient {
         $this->__construct($api_key);
     }
 
+    function _get_server() {
+        return trim($this->server, ' /');
+    }
+
     function __epidb_encode($data) {
         $res = array();
         foreach ($data as $key=>$val) {
@@ -102,13 +106,13 @@ class EpiDBClient {
     function profile_update($user_id, $data) {
         $param = array();
         $param['data'] = $this->__wrap($data);
-        $url = $this->server . $this->path_profile . $user_id . '/';
+        $url = $this->_get_server() . $this->path_profile . $user_id . '/';
         $res = $this->__epidb_call($url, $param);
         return $this->__unwrap($res);
     }
 
     function profile_get($user_id) {
-        $url = $this->server . $this->path_profile . $user_id . '/';
+        $url = $this->_get_server() . $this->path_profile . $user_id . '/';
         $res = $this->__epidb_call($url);
         return $this->__unwrap($res);
     }
