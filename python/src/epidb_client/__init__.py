@@ -133,4 +133,3 @@ class EpiDBClient(BasicClient):
         return res
 
 # vim: set ts=4 sts=4 expandtab:
-

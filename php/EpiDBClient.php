@@ -127,5 +127,4 @@ class EpiDBClient {
     }
 };
 
-// vim: ts=4 sts=4 expandtab
-
+// vim: set ts=4 sts=4 expandtab:
