@@ -1,6 +1,7 @@
 import urllib
 import urllib2
 import base64
+from datetime import datetime
 
 try:
     import simplejson as json
@@ -92,15 +93,23 @@ class EpiDBClient(BasicClient):
     path_response = '/response/'
     path_profile = '/profile/'
 
+    _date_format = '%Y-%m-%d %H:%M:%S'
+
     def __init__(self, api_key=None):
         self.api_key = api_key
 
     def _get_server(self):
         return self.server.strip().rstrip(' /')
 
-    def response_submit(self, data):
+    def response_submit(self, user_id, survey_id, answers, date=None):
+        if date is None:
+            date = datetime.utcnow().strftime(self._date_format)
+
         param = {
-            'data': json.dumps(data)
+            'user_id': user_id,
+            'survey_id': survey_id,
+            'date': date,
+            'answers': json.dumps(answers)
         }
 
         url = self._get_server() + self.path_response
@@ -108,9 +117,14 @@ class EpiDBClient(BasicClient):
 
         return res
 
-    def profile_update(self, user_id, data):
+    def profile_update(self, user_id, survey_id, answers, date=None):
+        if date is None:
+            date = datetime.utcnow().strftime(self._date_format)
+
         param = {
-            'data': json.dumps(data)
+            'survey_id': survey_id,
+            'date': date,
+            'answers': json.dumps(answers)
         }
 
         url = self._get_server() + self.path_profile + user_id + '/'

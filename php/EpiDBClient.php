@@ -95,17 +95,32 @@ class EpiDBClient {
         return $this->__json_decode($res);
     }
 
-    function response_submit($data) {
+    function response_submit($user_id, $survey_id, $answers, $date=null) {
+        if ($date === null) {
+            $date = gmdate('Y-m-d H:i:s', time());
+        }
+
         $param = array();
-        $param['data'] = $this->__wrap($data);
+        $param['user_id'] = $user_id;
+        $param['survey_id'] = $survey_id;
+        $param['date'] = $date;
+        $param['answers'] = $this->__wrap($answers);
+
         $url = $this->server . $this->path_response;
         $res = $this->__epidb_call($url, $param);
         return $this->__unwrap($res);
     }
 
-    function profile_update($user_id, $data) {
+    function profile_update($user_id, $survey_id, $answers, $date=null) {
+        if ($date === null) {
+            $date = gmdate('Y-m-d H:i:s', time());
+        }
+
         $param = array();
-        $param['data'] = $this->__wrap($data);
+        $param['survey_id'] = $survey_id;
+        $param['date'] = $date;
+        $param['answers'] = $this->__wrap($answers);
+
         $url = $this->_get_server() . $this->path_profile . $user_id . '/';
         $res = $this->__epidb_call($url, $param);
         return $this->__unwrap($res);
