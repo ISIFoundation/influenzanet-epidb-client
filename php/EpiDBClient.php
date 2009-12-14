@@ -67,7 +67,7 @@ class EpiDBClient {
         return $res;
     }
 
-    function __json_encode($data) {
+    function _json_encode($data) {
         if (function_exists('json_encode')) {
             return json_encode($data);
         }
@@ -77,7 +77,7 @@ class EpiDBClient {
         }
     }
 
-    function __json_decode($json) {
+    function _json_decode($json) {
         if (function_exists('json_decode')) {
             return json_decode($json, true);
         }
@@ -85,14 +85,6 @@ class EpiDBClient {
             $obj = new Services_JSON(SERVICES_JSON_LOOSE_TYPE);
             return $obj->decode($json);
         }
-    }
-
-    function __wrap($data) {
-        return $this->__json_encode($data);
-    }
-
-    function __unwrap($res) {
-        return $this->__json_decode($res);
     }
 
     function response_submit($user_id, $survey_id, $answers, $date=null) {
@@ -104,11 +96,11 @@ class EpiDBClient {
         $param['user_id'] = $user_id;
         $param['survey_id'] = $survey_id;
         $param['date'] = $date;
-        $param['answers'] = $this->__wrap($answers);
+        $param['answers'] = $this->_json_encode($answers);
 
         $url = $this->server . $this->path_response;
         $res = $this->__epidb_call($url, $param);
-        return $this->__unwrap($res);
+        return $this->_json_decode($res);
     }
 
     function profile_update($user_id, $survey_id, $answers, $date=null) {
@@ -119,11 +111,11 @@ class EpiDBClient {
         $param = array();
         $param['survey_id'] = $survey_id;
         $param['date'] = $date;
-        $param['answers'] = $this->__wrap($answers);
+        $param['answers'] = $this->_json_encode($answers);
 
         $url = $this->_get_server() . $this->path_profile . $user_id . '/';
         $res = $this->__epidb_call($url, $param);
-        return $this->__unwrap($res);
+        return $this->_json_decode($res);
     }
 };
 
