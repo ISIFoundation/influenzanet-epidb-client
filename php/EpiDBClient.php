@@ -6,10 +6,14 @@ if (!function_exists('json_encode') || !function_exists('json_decode')) {
     }
 }
 
+define('EPIDB_CLIENT_VERSION', '0.1.5');
+define('EPIDB_CLIENT_AGENT', 
+       'EpiDB-Client/' . EPIDB_CLIENT_VERSION . ' (php)');
+
 class EpiDBClient {
 
-    var $version = '0.1.0';
-    var $__user_agent = 'EpiDB-Client/0.1.5 (php)';
+    var $version = EPIDB_CLIENT_VERSION;
+    var $__user_agent = EPIDB_CLIENT_AGENT;
 
     var $server = 'https://egg.science.uva.nl:7443';
     var $path_response = '/response/';
