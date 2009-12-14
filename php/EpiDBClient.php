@@ -125,13 +125,6 @@ class EpiDBClient {
         $res = $this->__epidb_call($url, $param);
         return $this->__unwrap($res);
     }
-
-    function profile_get($user_id) {
-        $url = $this->_get_server() . $this->path_profile . $user_id . '/';
-        $res = $this->__epidb_call($url);
-        return $this->__unwrap($res);
-    }
-
 };
 
 // vim: ts=4 sts=4 expandtab
