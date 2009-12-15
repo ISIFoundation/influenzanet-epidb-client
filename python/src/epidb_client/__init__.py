@@ -75,7 +75,7 @@ class BasicClient:
             raise InvalidResponseError()
 
     def _encode_auth(self, key):
-        return base64.encodestring('%s:%s' % (key, key))[:-1]
+        return base64.encodestring('%s:%s' % (key, key)).replace("\n", "")
 
     def _auth_call(self, url, api_key, method='GET', param={}, headers={}, 
                    cookies={}):
