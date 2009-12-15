@@ -1,12 +1,14 @@
 import urllib
 import urllib2
+import base64
+from datetime import datetime
 
 try:
     import simplejson as json
 except ImportError:
     import json
 
-__version__ = '0.1.3'
+__version__ = '0.1.5'
 __user_agent__ = 'EpiDB-Client/%s (python)' % __version__
 
 class InvalidResponseError(Exception):
@@ -22,7 +24,7 @@ class BasicClient:
     version = __version__
     user_agent = __user_agent__
 
-    def _send(self, url, method='GET', param={}, cookies={}):
+    def _send(self, url, method='GET', param={}, headers={}, cookies={}):
         data = None
         if param:
             data = urllib.urlencode(param)
@@ -31,10 +33,14 @@ class BasicClient:
             data = ''
 
         req = urllib2.Request(url)
-        req.add_header('User-Agent', self.user_agent)
-        
+
+        for header in headers:
+            req.add_header(header, headers[header])
+
         if cookies:
             req.add_header('Cookie', urllib.urlencode(cookies))
+
+        req.add_header('User-Agent', self.user_agent)
 
         sock = urllib2.urlopen(req, data)
         res = sock.read()
@@ -42,12 +48,12 @@ class BasicClient:
 
         return res
 
-    def _call(self, url, method='GET', param={}, cookies={}):
+    def _call(self, url, method='GET', param={}, headers={}, cookies={}):
         res = None
         err = None
 
         try:
-            res = self._send(url, method, param, cookies)
+            res = self._send(url, method, param, headers, cookies)
         except urllib2.HTTPError, e:
             err = e
             res = e.read()
@@ -68,13 +74,18 @@ class BasicClient:
                 raise err
             raise InvalidResponseError()
 
-    def _auth_call(self, url, api_key, method='GET', param={}, cookies={}):
-        cookies['epidb-apikey'] = api_key
-        return self._call(url, method, param, cookies)
+    def _encode_auth(self, key):
+        return base64.encodestring('%s:%s' % (key, key)).replace("\n", "")
 
-    def _admin_call(self, url, session_id, method='GET', param={}, cookies={}):
+    def _auth_call(self, url, api_key, method='GET', param={}, headers={}, 
+                   cookies={}):
+        headers['Authorization'] = 'Basic %s' % self._encode_auth(api_key)
+        return self._call(url, method, param, headers, cookies)
+
+    def _admin_call(self, url, session_id, method='GET', param={}, headers={},
+                    cookies={}):
         cookies['session_id'] = session_id
-        return self._call(url, method, param, cookies)
+        return self._call(url, method, param, headers, cookies)
 
 class EpiDBClient(BasicClient):
 
@@ -82,15 +93,23 @@ class EpiDBClient(BasicClient):
     path_response = '/response/'
     path_profile = '/profile/'
 
+    _date_format = '%Y-%m-%d %H:%M:%S'
+
     def __init__(self, api_key=None):
         self.api_key = api_key
 
     def _get_server(self):
         return self.server.strip().rstrip(' /')
 
-    def response_submit(self, data):
+    def response_submit(self, user_id, survey_id, answers, date=None):
+        if date is None:
+            date = datetime.utcnow().strftime(self._date_format)
+
         param = {
-            'data': json.dumps(data)
+            'user_id': user_id,
+            'survey_id': survey_id,
+            'date': date,
+            'answers': json.dumps(answers)
         }
 
         url = self._get_server() + self.path_response
@@ -98,9 +117,14 @@ class EpiDBClient(BasicClient):
 
         return res
 
-    def profile_update(self, user_id, data):
+    def profile_update(self, user_id, survey_id, answers, date=None):
+        if date is None:
+            date = datetime.utcnow().strftime(self._date_format)
+
         param = {
-            'data': json.dumps(data)
+            'survey_id': survey_id,
+            'date': date,
+            'answers': json.dumps(answers)
         }
 
         url = self._get_server() + self.path_profile + user_id + '/'
@@ -109,4 +133,3 @@ class EpiDBClient(BasicClient):
         return res
 
 # vim: set ts=4 sts=4 expandtab:
-

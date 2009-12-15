@@ -6,10 +6,14 @@ if (!function_exists('json_encode') || !function_exists('json_decode')) {
     }
 }
 
+define('EPIDB_CLIENT_VERSION', '0.1.5');
+define('EPIDB_CLIENT_AGENT', 
+       'EpiDB-Client/' . EPIDB_CLIENT_VERSION . ' (php)');
+
 class EpiDBClient {
 
-    var $version = '0.1.0';
-    var $__user_agent = 'EpiDB-Client/0.1.0 (php)';
+    var $version = EPIDB_CLIENT_VERSION;
+    var $__user_agent = EPIDB_CLIENT_AGENT;
 
     var $server = 'https://egg.science.uva.nl:7443';
     var $path_response = '/response/';
@@ -22,6 +26,10 @@ class EpiDBClient {
 
     function EpiDBClient($api_key=null) {
         $this->__construct($api_key);
+    }
+
+    function _get_server() {
+        return trim($this->server, ' /');
     }
 
     function __epidb_encode($data) {
@@ -48,14 +56,18 @@ class EpiDBClient {
         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_USERAGENT, $this->__user_agent);
-        curl_setopt($ch, CURLOPT_COOKIE, "epidb-apikey=" . $this->api_key);
+        if ($this->api_key != null) {
+            curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+            $userpwd = $this->api_key . ':' . $this->api_key;
+            curl_setopt($ch, CURLOPT_USERPWD, $userpwd);
+        }
         $res = curl_exec($ch);
         curl_close($ch);
 
         return $res;
     }
 
-    function __json_encode($data) {
+    function _json_encode($data) {
         if (function_exists('json_encode')) {
             return json_encode($data);
         }
@@ -65,7 +77,7 @@ class EpiDBClient {
         }
     }
 
-    function __json_decode($json) {
+    function _json_decode($json) {
         if (function_exists('json_decode')) {
             return json_decode($json, true);
         }
@@ -75,37 +87,36 @@ class EpiDBClient {
         }
     }
 
-    function __wrap($data) {
-        return $this->__json_encode($data);
-    }
+    function response_submit($user_id, $survey_id, $answers, $date=null) {
+        if ($date === null) {
+            $date = gmdate('Y-m-d H:i:s', time());
+        }
 
-    function __unwrap($res) {
-        return $this->__json_decode($res);
-    }
-
-    function response_submit($data) {
         $param = array();
-        $param['data'] = $this->__wrap($data);
-        $url = $this->server . $this->path_response;
+        $param['user_id'] = $user_id;
+        $param['survey_id'] = $survey_id;
+        $param['date'] = $date;
+        $param['answers'] = $this->_json_encode($answers);
+
+        $url = $this->_get_server() . $this->path_response;
         $res = $this->__epidb_call($url, $param);
-        return $this->__unwrap($res);
+        return $this->_json_decode($res);
     }
 
-    function profile_update($user_id, $data) {
+    function profile_update($user_id, $survey_id, $answers, $date=null) {
+        if ($date === null) {
+            $date = gmdate('Y-m-d H:i:s', time());
+        }
+
         $param = array();
-        $param['data'] = $this->__wrap($data);
-        $url = $this->server . $this->path_profile . $user_id . '/';
+        $param['survey_id'] = $survey_id;
+        $param['date'] = $date;
+        $param['answers'] = $this->_json_encode($answers);
+
+        $url = $this->_get_server() . $this->path_profile . $user_id . '/';
         $res = $this->__epidb_call($url, $param);
-        return $this->__unwrap($res);
+        return $this->_json_decode($res);
     }
-
-    function profile_get($user_id) {
-        $url = $this->server . $this->path_profile . $user_id . '/';
-        $res = $this->__epidb_call($url);
-        return $this->__unwrap($res);
-    }
-
 };
 
-// vim: ts=4 sts=4 expandtab
-
+// vim: set ts=4 sts=4 expandtab:

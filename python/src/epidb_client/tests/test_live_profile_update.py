@@ -2,7 +2,7 @@ import unittest
 
 import epidb_client
 from epidb_client import EpiDBClient
-import config
+from epidb_client.tests import config
 
 class LiveProfileUpdateTestCase(unittest.TestCase):
     def setUp(self):
@@ -15,7 +15,9 @@ class LiveProfileUpdateTestCase(unittest.TestCase):
                      'p0002': '2'}
 
     def testSuccess(self):
-        result = self.client.profile_update(config.user_id, self.data)
+        result = self.client.profile_update(config.user_id, 
+                                            config.profile_survey_id, 
+                                            self.data)
         self.assertEqual(result['stat'], 'ok')
 
 class LiveProfileUpdateUnauthorizedTestCase(unittest.TestCase):
@@ -30,7 +32,9 @@ class LiveProfileUpdateUnauthorizedTestCase(unittest.TestCase):
 
     def testUnauthorized(self):
         try:
-            self.client.profile_update(config.user_id, self.data)
+            self.client.profile_update(config.user_id, 
+                                       config.profile_survey_id, 
+                                       self.data)
             self.fail()
         except epidb_client.ResponseError, e:
             self.assertEqual(e.code, 401)
