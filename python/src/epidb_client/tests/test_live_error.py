@@ -3,8 +3,8 @@ import urllib2
 import random
 import socket
 
-import epidb_client
-from epidb_client import BasicClient, config
+from epidb_client import EpiDBClient
+from epidb_client.tests import config
 
 class LiveErrorsTestCase(unittest.TestCase):
     def setUp(self):
@@ -18,7 +18,9 @@ class LiveErrorsTestCase(unittest.TestCase):
     def testInvalidHost(self):
         self.client.server = 'http://localhost.example/'
         try:
-            self.client.profile_update(config.user_id, self.data)
+            self.client.profile_update(config.user_id,
+                                       config.profile_survey_id, 
+                                       self.data)
             self.fail()
         except urllib2.URLError, e:
             self.assertEqual(e.reason.errno, 8)
@@ -30,6 +32,7 @@ class LiveErrorsTestCase(unittest.TestCase):
             ss.settimeout(0.25)
             try:
                 ss.connect(('127.0.0.1', port))
+                ss.close()
             except socket.error:
                 return port
 
@@ -38,7 +41,9 @@ class LiveErrorsTestCase(unittest.TestCase):
 
         self.client.server = 'http://127.0.0.1:%d/' % port
         try:
-            self.client.profile_update(config.user_id, self.data)
+            self.client.profile_update(config.user_id,
+                                       config.profile_survey_id, 
+                                       self.data)
             self.fail()
         except urllib2.URLError, e:
             self.assertEqual(e.reason.errno, 61)
