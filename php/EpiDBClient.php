@@ -98,7 +98,7 @@ class EpiDBClient {
         $param['date'] = $date;
         $param['answers'] = $this->_json_encode($answers);
 
-        $url = $this->server . $this->path_response;
+        $url = $this->_get_server() . $this->path_response;
         $res = $this->__epidb_call($url, $param);
         return $this->_json_decode($res);
     }
