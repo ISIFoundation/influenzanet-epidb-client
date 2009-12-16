@@ -1,6 +1,7 @@
 import unittest
 import urllib
 import urllib2
+import base64
 
 try:
     import simplejson as json
@@ -8,11 +9,11 @@ except ImportError:
     import json
 
 import epidb_client
-from epidb_client import BasicClient, config
+from epidb_client import BasicClient
+from epidb_client.tests import config
+from epidb_client.tests.mocks import *
 
-from mocks import *
-
-class BasicClientTestCase(unittest.TestCase):
+class TestCase(unittest.TestCase):
     def setUp(self):
         self.urllib2 = MockUrllib2()
         self.urllib2_orig = epidb_client.urllib2
@@ -23,6 +24,7 @@ class BasicClientTestCase(unittest.TestCase):
     def tearDown(self):
         epidb_client.urllib2 = self.urllib2_orig 
 
+class BasicClientTestCase(TestCase):
     def testParam(self):
         self.urllib2._result = None
 
@@ -83,6 +85,7 @@ class BasicClientTestCase(unittest.TestCase):
             self.assertEqual(e, item)
         self.assertEqual(sorted(keys), sorted(data.keys()))
 
+class ResponseTestCase(TestCase):
     def testValidResult(self):
         eresult = '{"stat": "ok", "msg": "hello world!"}'
         dresult = json.loads(eresult)
@@ -220,21 +223,26 @@ class BasicClientTestCase(unittest.TestCase):
         self.assertRaises(epidb_client.InvalidResponseError, self.client._call,
                           config.server)
 
+class ApiKeyTestCase(TestCase):
     def testApiKey(self):
         self.urllib2._result = '{"stat": "ok"}'
 
-        # Make sure User-Agent string is added
         self.client._auth_call(config.server, config.api_key)
-        self.assertTrue('User-Agent' in self.urllib2.request.headers.keys())
 
-        # API Key is sent as cookie
-        self.assertTrue('Cookie' in self.urllib2.request.headers.keys())
-        cookie = filter(lambda x: x.startswith('epidb-apikey='), 
-                        self.urllib2.request.headers['Cookie'].split('&'))
-        k, v = cookie[0].split('=')
-        self.assertEqual(k, 'epidb-apikey')
-        self.assertEqual(v, config.api_key)
+        # API Key is sent as Basic HTTP Auth
+        self.assertTrue('Authorization' in self.urllib2.request.headers.keys())
+        auth = self.urllib2.request.headers['Authorization']
+        (auth_type, auth_string) = auth.split(' ', 1)
+        
+        self.assertEqual(auth_type, 'Basic')
 
+        decoded = base64.decodestring(auth_string)
+        (key1, key2) = decoded.split(':', 1)
+
+        self.assertEqual(key1, key2)
+        self.assertEqual(key1, config.api_key)
+
+class SessionIdTestCase(TestCase):
     def testSessionId(self):
         self.urllib2._result = '{"stat": "ok"}'
 
