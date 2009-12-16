@@ -5,11 +5,11 @@ sys.path += ['src']
 
 setup(
     name = "epidb-client",
-    version = '0.1.5-alpha-1',
+    version = '0.1.5-alpha-2',
     url = 'http://www.epiwork.eu/',
     description = 'EPIWork Database - Client Code',
     author = 'Fajran Iman Rusadi',
-    package_dir = {'': 'python/src'},
+    package_dir = {'': 'src'},
     packages = ['epidb_client'],
     install_requires = ['simplejson'],
     test_suite = 'epidb_client.tests',
