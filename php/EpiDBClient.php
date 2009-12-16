@@ -6,7 +6,7 @@ if (!function_exists('json_encode') || !function_exists('json_decode')) {
     }
 }
 
-define('EPIDB_CLIENT_VERSION', '0.1.5');
+define('EPIDB_CLIENT_VERSION', '0.1.5-alpha-1');
 define('EPIDB_CLIENT_AGENT', 
        'EpiDB-Client/' . EPIDB_CLIENT_VERSION . ' (php)');
 

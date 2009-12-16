@@ -5,7 +5,7 @@ sys.path += ['src']
 
 setup(
     name = "epidb-client",
-    version = '0.1.5',
+    version = '0.1.5-alpha-1',
     url = 'http://www.epiwork.eu/',
     description = 'EPIWork Database - Client Code',
     author = 'Fajran Iman Rusadi',
