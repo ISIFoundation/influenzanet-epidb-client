@@ -8,7 +8,7 @@ try:
 except ImportError:
     import json
 
-__version__ = '0.1.5-alpha-1'
+__version__ = '0.1.5-alpha-2'
 __user_agent__ = 'EpiDB-Client/%s (python)' % __version__
 
 class InvalidResponseError(Exception):
