@@ -101,10 +101,13 @@ class EpiDBClient(BasicClient):
     def _get_server(self):
         return self.server.strip().rstrip(' /')
 
-    def response_submit(self, user_id, survey_id, answers, date=None):
+    def _format_date(self, date):
         if date is None:
-            date = datetime.utcnow().strftime(self._date_format)
+            date = datetime.utcnow()
+        return date.strftime(self._date_format)
 
+    def response_submit(self, user_id, survey_id, answers, date=None):
+        date = self._format_date(date)
         param = {
             'user_id': user_id,
             'survey_id': survey_id,
@@ -118,9 +121,7 @@ class EpiDBClient(BasicClient):
         return res
 
     def profile_update(self, user_id, survey_id, answers, date=None):
-        if date is None:
-            date = datetime.utcnow().strftime(self._date_format)
-
+        date = self._format_date(date)
         param = {
             'survey_id': survey_id,
             'date': date,
