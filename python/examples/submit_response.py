@@ -6,7 +6,7 @@ from datetime import datetime
 sys.path.insert(0, os.path.join(os.path.dirname(
     os.path.dirname(os.path.abspath(__file__))), 'src'))
 
-from datetime import datetime
+from datetime import datetime, date
 
 from epidb_client import EpiDBClient
 
@@ -18,7 +18,10 @@ survey_id = config.survey_id
 answers = {'q1': 1,
            'q2': True,
            'q3': [ 1, 2, 3 ],
-           'q4': 'Jakarta'}
+           'q4': 'Jakarta',
+           'q5': date(2011, 01, 01),
+           'q6': datetime(2011, 01, 01, 12, 34, 31),
+           }
 
 # If you set date to None, the current date and time 
 # will be used

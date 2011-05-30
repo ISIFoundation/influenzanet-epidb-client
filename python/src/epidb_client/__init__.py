@@ -1,7 +1,7 @@
 import urllib
 import urllib2
 import base64
-from datetime import datetime
+from datetime import datetime, date
 
 try:
     import simplejson as json
@@ -87,8 +87,14 @@ class BasicClient:
         cookies['session_id'] = session_id
         return self._call(url, method, param, headers, cookies)
 
-class EpiDBClient(BasicClient):
+class DateEncoder(json.JSONEncoder):
+    """Encode dates and datetimes as iso format."""
+    def default(self, o):
+        if isinstance(o, datetime) or isinstance(o, date):
+            return o.isoformat()
+        return json.JSONEncoder.default(self, o)
 
+class EpiDBClient(BasicClient):
     server = 'https://egg.science.uva.nl:7443'
     path_response = '/response/'
     path_profile = '/profile/'
@@ -112,7 +118,7 @@ class EpiDBClient(BasicClient):
             'user_id': user_id,
             'survey_id': survey_id,
             'date': date,
-            'answers': json.dumps(answers)
+            'answers': json.dumps(answers, cls=DateEncoder)
         }
 
         url = self._get_server() + self.path_response
@@ -125,7 +131,7 @@ class EpiDBClient(BasicClient):
         param = {
             'survey_id': survey_id,
             'date': date,
-            'answers': json.dumps(answers)
+            'answers': json.dumps(answers, cls=DateEncoder)
         }
 
         url = self._get_server() + self.path_profile + user_id + '/'
