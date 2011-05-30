@@ -11,6 +11,9 @@ define('EPIDB_CLIENT_AGENT',
        'EpiDB-Client/' . EPIDB_CLIENT_VERSION . ' (php)');
 
 class EpiDBClient {
+    // In terms of dates, note the following:
+    // 1. de message date is sent in the 2001-01-01 12:23:34 format
+    // 2. there are no provisions here for sending date in surveys/profiles
 
     var $version = EPIDB_CLIENT_VERSION;
     var $__user_agent = EPIDB_CLIENT_AGENT;
