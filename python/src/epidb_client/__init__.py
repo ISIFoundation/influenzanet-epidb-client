@@ -108,6 +108,9 @@ class EpiDBClient(BasicClient):
         return self.server.strip().rstrip(' /')
 
     def _format_date(self, date):
+        """Klaas says: Note that dates are sent as 2000-01-01 12:23:33 as opposed to our standard
+        Isoformat. This is for historical reasons: I don't dare to change it yet."""
+
         if date is None:
             date = datetime.utcnow()
         return date.strftime(self._date_format)
